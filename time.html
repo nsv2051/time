@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>当前时间</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 3em;
+    }
+
+    #current-time {
+        margin-bottom: 20px;
+    }
+
+    #date-info {
+        font-size: 1em;
+    }
+
+    #toggle-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #toggle-btn:hover {
+        background-color: #ccc;
+    }
+
+    .day {
+        background: linear-gradient(to right, #ff7e5f, #feb47b);
+        color: white;
+    }
+
+    .night {
+        background: linear-gradient(to right, #2c3e50, #3498db);
+        color: white;
+    }
+
+    #time-sync {
+        font-size: 0.6em;
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body class="day">
+    <button id="toggle-btn" onclick="toggleTheme()">切换主题</button>
+    <div id="date-info"></div>
+    <div id="current-time"></div>
+    <div id="time-sync">
+        <p>注意！！！</p>
+        <p>将Windows对时服务器设置为 <strong>ntp.aliyun.com</strong></p>
+    </div>
+    <script>
+        function updateTime() {
+            const currentTime = new Date();
+            const milliseconds = currentTime.getMilliseconds();
+            document.getElementById('current-time').innerText = currentTime.toLocaleTimeString() + '.' + milliseconds;
+            document.getElementById('date-info').innerText = currentTime.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' }) + ' ' + currentTime.toLocaleDateString('zh-CN', { weekday: 'long' });
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('day');
+            document.body.classList.toggle('night');
+        }
+
+        updateTime();
+        setInterval(updateTime, 1); // Update every millisecond
+    </script>
+</body>
+</html>
